@@ -1,0 +1,48 @@
+.navbar-default .navbar-nav > .active > a,
+      .navbar-default .navbar-nav > .active > a:hover,
+      .navbar-default .navbar-nav > .active > a:focus {
+        background-color: #FF6A39; /* Change 'your-color' to the desired color */
+        color: #ffffff; /* Text color */
+      }
+
+      .navbar-brand{
+        padding-top: 12px;
+        display: flex;
+        align-items: center;    
+    }
+
+.navbar-default .navbar-nav > li:first-child > a,
+.navbar-default .navbar-nav > li:first-child > a:hover,
+.navbar-default .navbar-nav > li:first-child > a:focus {
+    background-color: #F8F8F8;
+    color: #000000; /* Change text color if needed */
+    width: 0;
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+#img-2
+{
+    display: flex;
+    align-items: center;
+}
+
+#logo 
+{
+    display: flex;
+    align-items: center;
+}
+
+.graphs
+{
+    display: flex;
+    align-items: center;
+}
+
+.title-graph{
+    margin-left: auto;
+}
+
+#AU-G{
+    height: 700px;
+}

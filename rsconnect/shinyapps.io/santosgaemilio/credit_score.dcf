@@ -1,0 +1,10 @@
+name: credit_score
+title:
+username: santosgaemilio
+account: santosgaemilio
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10586263
+bundleId: 7950679
+url: https://santosgaemilio.shinyapps.io/credit_score/
+version: 1
