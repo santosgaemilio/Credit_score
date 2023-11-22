@@ -46,3 +46,74 @@
 #AU-G{
     height: 700px;
 }
+
+#main{
+    font-family: Montserrat;
+}
+#main-page-title{
+    background-color: #FF6A39;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+#main-content{
+    margin-left: 5%;
+    padding-top: 0.01%;
+    padding-bottom: 2%;    
+    font-weight: 300;
+    color: #ffffff;
+}
+
+#main-title{
+    display: flex;
+    align-items: center;
+}
+
+#main-logo{
+    height: 50px;
+    margin-left: auto;
+    padding-right: 2%;
+}
+
+#main-page-body{
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.row {
+    display: flex;
+  }
+  
+.column {
+    flex: 50%;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 2%;
+    text-align: justify;
+    /* border-style: solid;
+    border-radius: 2%; */
+}
+
+#body-sblock{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    padding: 2%;
+    border-style: solid;
+    background-color: #000000;
+}
+
+#problema-title{
+    display: flex;
+    align-items: center;
+}
+
+#problema-logo{
+    height: 30px;
+    margin-left: auto;
+    padding-right: 5%;
+}
+
+#problema-text{
+    margin-right: 3%;
+}
