@@ -55,27 +55,28 @@ function(input, output, session) {
     )
     shinyjs::onclick("logo",  updateTabsetPanel(session, inputId="navbar", selected="main"))
     
+    
   # ---- ANALISIS UNIVARIADO --------
     output$AU <- renderUI({
       switch(
         input$AUoptions,
         "Distribución de Género" = {
-          plotOutput("GDistGen")
+          plotOutput("GDistGen", height = "600px")
         },
         "Distribución de clientes existentes" = {
-          plotOutput("GDclient")
+          plotOutput("GDclient", height = "600px")
         },
         "Distribución de perfil laboral" = {
-          plotOutput("GDperfil")
+          plotOutput("GDperfil", height = "600px")
         },
         "Distribución de ingresos" = {
-          plotOutput("GDingresos")
+          plotOutput("GDingresos", height = "600px")
         },
         "Distribución de puntuación crediticia" = {
-          plotOutput("GDpuntuacion")
+          plotOutput("GDpuntuacion", height = "600px")
         },
         "Distribuciíon del monto de préstamo" = {
-          plotOutput("GDmontoPrestamo")
+          plotOutput("GDmontoPrestamo", height = "600px")
         }
       )
     })
@@ -174,6 +175,96 @@ function(input, output, session) {
                            Credit.Score,Credit.History.Length, 
                            Number.of.Existing.Loans, Loan.Amount, 
                            Loan.Tenure, LTV.Ratio, Profile.Score)  
+    cor_matrix <- cor(numeric.df, use = "complete.obs")
+    cor_matrix_melted <- melt(cor_matrix)
+    output$AB <- renderUI({
+      switch(
+        input$ABoptions,
+        "Matriz de correlación" = {
+          plotOutput("GMatriz", height = "600px")
+        },
+        "Ingresos vs Puntuación de Crédito" = {
+          plotOutput("GRIngresos", height = "600px")
+        },
+        "Puntuación de Perfil y de Crédito" = {
+          plotOutput("GRPerfil", height = "600px")
+        },
+        "Préstamo-valor vs puntuación de perfil" = {
+          plotOutput("GRPrestamo", height = "600px")
+        }
+      )
+    })
     
+    output$AB.Desc <- renderUI({
+      switch(
+        input$ABoptions,
+        "Matriz de correlación" = {
+          p("Visualización de la relación lineal de nuestras variables")
+        },
+        "Ingresos vs Puntuación de Crédito" = {
+          tagList(
+            p("Una relación positiva podría indicar que individuos con mayores 
+            ingresos tienden a tener mejores puntuaciones de crédito. Esto podría 
+            deberse a una mayor capacidad para manejar deudas y pagos a tiempo."),
+            p(strong("Implicaciones:")," Esta relación puede ser útil para las instituciones 
+              financieras para evaluar la solvencia de los solicitantes de crédito.")
+          )
+        },
+        "Puntuación de Perfil y de Crédito" = {
+          tagList(
+            p("Aquí hay una fuerte relación entre estas dos variables, lo cual indica 
+            que la puntuación de perfil, que podría incluir factores como estabilidad 
+            laboral o historial financiero, es un buen indicador de la puntuación de crédito."),
+            p(strong("Implicaciones:"), " Esto puede ser valioso para desarrollar modelos predictivos 
+          de riesgo crediticio.")
+          )
+        },
+        "Préstamo-valor vs puntuación de perfil" = {
+          tagList(
+            p("Existe una relación significativa, aunque es negativa, podría sugerir 
+            que las personas con perfiles más fuertes tienden a tener ratios de 
+            préstamo-valor más bajos."),
+            p(strong("Implicaciones:"), "  Esto podría informar 
+            las decisiones sobre la concesión de préstamos, especialmente en 
+            préstamos garantizados como hipotecas.")
+          )
+        }
+      )
+    })
+    
+    output$GMatriz <- renderPlot({
+      ggplot(cor_matrix_melted, aes(Var1, Var2, fill = value)) +
+        geom_tile() +
+        scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+        theme_minimal() +
+        coord_fixed() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "", y = "", title = "Matriz de Correlación")
+    })
+    output$GRIngresos <- renderPlot({
+      ggplot(df, aes(x = Income, y = Credit.Score)) + 
+        geom_point(alpha = 0.5, color = "#ffae80") +
+        theme_minimal() +
+        geom_smooth(method = "lm", color = "#000000") +
+        labs(title = "Relación entre Ingresos y Puntuación de Crédito", x = "Ingresos", y = "Puntuación de Crédito")
+    })
+    
+    output$GRPerfil <- renderPlot({
+      ggplot(df, aes(x = Profile.Score, y = Credit.Score)) + 
+        geom_point(alpha = 0.5, color = "#ffae80") +
+        theme_minimal() +
+        geom_smooth(method = "lm", color = "#000000") +
+        labs(title = "Relación entre Puntuación de Perfil y Puntuación de Crédito", x = "Puntuación de Perfil", y = "Puntuación de Crédito")
+    })
+    
+    output$GRPrestamo <- renderPlot({
+      ggplot(df, aes(x = LTV.Ratio, y = Profile.Score)) + 
+        geom_point(alpha = 0.5, color = "#ffae80") +
+        theme_minimal() + 
+        geom_smooth(method = "lm", color = "#000000") +
+        labs(title = "Relación entre el préstamo-valor y la puntuación de perfil", x = "Préstamo valor", y = "Puntuación de perfil")
+    })
 
+  # --------- SOLUCIONES---------
+    
 }

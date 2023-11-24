@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&display=swap" rel="stylesheet">
@@ -13,6 +12,7 @@
 <body>
     
     <div id = "main">
+        
         <div id="main-page-title">
             <div id = "main-content">
                 <div id = "main-title">
@@ -20,33 +20,44 @@
                     <img src="main_bedu.png" id = "main-logo">
                 </div>
                 <p style = "font-weight: 400;
-                font-size: larger;">Perfil de Usuarios Óptimos para Créditos</p>
+                font-size: x-large;">Perfil de Usuarios Óptimos para Créditos</p>
+                <div id = solucion></div>
             </div>
         </div>
-        <br>
+        <br>        
         <div id = "main-page-body">
             <div id = "body-content" class= "row">
                 <div class="column">
+                    <img src="quotes.png" alt="" class = "quotes">
                     <h2>Elevator pitch</h1>
                     <p style = "font-size: large;">Una plataforma web donde se puede analizar el puntaje crediticio de los usuarios pueden adquirir créditos.</p>
                 </div>
                 <div class="column" style="padding-top: 0%;">
-                    <h2 style="text-align: left;">Oportunidad de mercado</h1>
+                    <div id = "mercado-title">
+                        <h2 style="text-align: left;">Oportunidad de mercado</h1>
+                        <img src="mercado.png" alt="" id="mercado">                        
+                    </div>
                     <b><p>Según la Encuesta Nacional de Inclusión Financiera (ENIF):</p></b>
-                    <li>En 2021, el 32.7% de las personas de 18 a 70 años tienen al menos un crédito formal, lo que representa 27.4 millones de personas.</li>
+                    <li style = "font-size: large;">En 2021, el 32.7% de las personas de 18 a 70 años tienen al menos un crédito formal, lo que representa 27.4 millones de personas.</li>
                 </div>              
             </div>
             
             <div id = "body-sblock" style="color: #ffffff;">
                 <div id = "problema-title"> 
-                    <h2  id = "problema-text">Problema a solucionar</h2>
+                    <h2  id = "problema-text">Problema a <span id = "solucion-btn">solucionar</span></h2>
                     <img src="cross.png" alt="" id="problema-logo">
                 </div>
                 
                 <p style="font-size: large; padding: 2%;">Para una gran cantidad de usuarios les es difícil definir si cuentan un puntaje atractivo para la autorización de créditos bancarios.</p>
             </div>  
         </div>
+        
+        <div id = "arrow-cont">
+            <img src="arrow.png" alt="" id = "arrow">
+        </div>
     </div>
 
+    <script src="app.js"></script>
+    <script src="logo.js"></script>
 </body>
 </html>

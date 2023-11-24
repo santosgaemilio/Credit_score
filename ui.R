@@ -32,6 +32,7 @@ fluidPage(
                       tags$div(
                         id = "insertedHTML",
                         HTML('<div id = "main">
+        
         <div id="main-page-title">
             <div id = "main-content">
                 <div id = "main-title">
@@ -39,31 +40,40 @@ fluidPage(
                     <img src="main_bedu.png" id = "main-logo">
                 </div>
                 <p style = "font-weight: 400;
-                font-size: larger;">Perfil de Usuarios Óptimos para Créditos</p>
+                font-size:  x-large;">Perfil de Usuarios Óptimos para Créditos</p>
+                <div id = solucion></div>
             </div>
         </div>
-        <br>
+        <br>        
         <div id = "main-page-body">
             <div id = "body-content" class= "row">
                 <div class="column">
+                    <img src="quotes.png" alt="" class = "quotes">
                     <h2>Elevator pitch</h1>
                     <p style = "font-size: large;">Una plataforma web donde se puede analizar el puntaje crediticio de los usuarios pueden adquirir créditos.</p>
                 </div>
                 <div class="column" style="padding-top: 0%;">
-                    <h2 style="text-align: left;">Oportunidad de mercado</h1>
-                    <b><p>Según la Encuesta Nacional de Inclusión Financiera (ENIF):</p></b>
-                    <li>En 2021, el 32.7% de las personas de 18 a 70 años tienen al menos un crédito formal, lo que representa 27.4 millones de personas.</li>
+                    <div id = "mercado-title">
+                        <h2 style="text-align: left;">Oportunidad de mercado</h2>
+                        <img src="mercado.png" alt="" id="mercado">                        
+                    </div>
+                    <b><p style = "font-size: large;">Según la Encuesta Nacional de Inclusión Financiera (ENIF):</p></b>
+                    <li style = "font-size: large;">En 2021, el 32.7% de las personas de 18 a 70 años tienen al menos un crédito formal, lo que representa 27.4 millones de personas.</li>
                 </div>              
             </div>
             
             <div id = "body-sblock" style="color: #ffffff;">
                 <div id = "problema-title"> 
-                    <h2  id = "problema-text">Problema a solucionar</h2>
+                    <h2  id = "problema-text">Problema a <span id = "solucion-btn">solucionar</span></h2>
                     <img src="cross.png" alt="" id="problema-logo">
                 </div>
                 
                 <p style="font-size: large; padding: 2%;">Para una gran cantidad de usuarios les es difícil definir si cuentan un puntaje atractivo para la autorización de créditos bancarios.</p>
             </div>  
+        </div>
+        
+        <div id = "arrow-cont">
+            <img src="arrow.png" alt="" id = "arrow">
         </div>
     </div>')
                       ),
@@ -112,12 +122,10 @@ fluidPage(
                              class = "graphs",
                              h3("Gráficas"),
                              img(src = "graph.png", height = "30px",  class = "title-graph")),
-                           selectInput("ABoptions","",c("Distribución de Género",
-                                                        "Distribución de clientes existentes",
-                                                        "Distribución de perfil laboral",
-                                                        "Distribución de ingresos",
-                                                        "Distribución de puntuación crediticia",
-                                                        "Distribuciíon del monto de préstamo")),
+                           selectInput("ABoptions","",c("Matriz de correlación",
+                                                        "Ingresos vs Puntuación de Crédito",
+                                                        "Puntuación de Perfil y de Crédito",
+                                                        "Préstamo-valor vs puntuación de perfil")),
                            uiOutput("AB.Desc")
                          ),
                          mainPanel(

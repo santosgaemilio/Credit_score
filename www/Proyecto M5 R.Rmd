@@ -1,5 +1,5 @@
 ---
-title: "Proyecto M5 R"
+title: "Análisis crediticio"
 author: "Team 6"
 output: html_document
 ---
@@ -14,35 +14,35 @@ Este conjunto de datos proporciona una descripción completa de los perfiles de 
 
 Entendamos cada una de las variables:
 
--Age: Representa la edad del solicitante. Indica el nivel de madurez del solicitante.
+-   **Age**: Representa la edad del solicitante. Indica el nivel de madurez del solicitante.
 
--Gender: Género del solicitante.
+-   **Gender**: Género del solicitante.
 
--Income: Los ingresos del solicitante, que son fundamentales para evaluar su capacidad para pagar el préstamo.
+-   **Income**: Los ingresos del solicitante, que son fundamentales para evaluar su capacidad para pagar el préstamo.
 
--Credit Score: Puntuación que cuantifica la solvencia del solicitante en función de su historial crediticio. Basado en el modelo FICO.
+-   **Credit Score**: Puntuación que cuantifica la solvencia del solicitante en función de su historial crediticio. Basado en el modelo FICO.
 
--Credit History Length: Representa el número de meses desde la primera línea de crédito del solicitante. Indica la experiencia del solicitante en la gestión de crédito.
+-   **Credit History Length**: Representa el número de meses desde la primera línea de crédito del solicitante. Indica la experiencia del solicitante en la gestión de crédito.
 
--Number of Existing Loans: El número de préstamos que tiene actualmente el solicitante.
+-   **Number of Existing Loans**: El número de préstamos que tiene actualmente el solicitante.
 
--Loan Amount: La cantidad de dinero que solicita el solicitante
+-   **Loan Amount**: La cantidad de dinero que solicita el solicitante
 
--Loan Tenure: El número de meses que el solicitante desea pagar el préstamo.
+-   **Loan Tenure**: El número de meses que el solicitante desea pagar el préstamo.
 
--Existing Customer: Si el solicitante es un cliente existente de la compañía financiera.
+-   Existing Customer: Si el solicitante es un cliente existente de la compañía financiera.
 
--State: El estado de la India donde reside el solicitante.
+-   State: El estado de la India donde reside el solicitante.
 
--City: La ciudad o pueblo de la India donde reside el solicitante.
+-   City: La ciudad o pueblo de la India donde reside el solicitante.
 
--LTV Ratio: La relación préstamo-valor representa la relación entre el monto del préstamo y el valor de tasación del activo (normalmente una casa). Los LTV más altos pueden indicar un mayor riesgo.
+-   TV Ratio: La relación préstamo-valor representa la relación entre el monto del préstamo y el valor de tasación del activo (normalmente una casa). Los LTV más altos pueden indicar un mayor riesgo.
 
--Employment Profile: Categoría laboral general del solicitante.
+-   Employment Profile: Categoría laboral general del solicitante.
 
--Occupation: Ocupación específica o puesto de trabajo del solicitante.
+-   Occupation: Ocupación específica o puesto de trabajo del solicitante.
 
--Profile Score: Una puntuación que oscila entre 0 y 100 representa el perfil general del solicitante en función de los datos reales de pago del préstamo. Los valores más altos indican mejores perfiles.
+-   Profile Score: Una puntuación que oscila entre 0 y 100 representa el perfil general del solicitante en función de los datos reales de pago del préstamo. Los valores más altos indican mejores perfiles.
 
 ## Importamos las bibliotecas necesarias para el projecto
 

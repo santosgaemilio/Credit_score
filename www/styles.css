@@ -66,7 +66,9 @@
 
 #main-title{
     display: flex;
-    align-items: center;
+    /* align-items: center;
+    height: 800px;
+    100 */
 }
 
 #main-logo{
@@ -116,4 +118,52 @@
 
 #problema-text{
     margin-right: 3%;
+}
+
+.quotes{
+    width: 30px;
+}
+
+#mercado{
+    width: 100px;
+    padding-left: 5%;
+}
+
+#mercado-title{
+    display: flex;
+    align-items: center;
+}
+
+#arrow{
+    width: 60px;
+}
+
+#arrow-cont {
+    padding-left: 50%;
+    align-items: center;
+    position: fixed;
+    bottom: 0; /* or adjust as per your need */
+    left: 0;
+    z-index: 100;
+    padding-bottom: 1%;
+}
+
+#AUG-G{
+   padding-top: 10%; 
+}
+
+#solucion-text{
+    padding-top: 10%;
+    font-size: large;
+    font-weight: 600;
+}
+
+#solucion-subtext{
+    padding-right: 2%;
+}
+
+#masBtn{
+    width: 140px;
+    padding-left: 34%;
+    padding-top: 5%;
 }
