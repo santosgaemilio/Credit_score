@@ -139,7 +139,7 @@
 }
 
 #arrow-cont {
-    padding-left: 50%;
+    padding-left: 48%;
     align-items: center;
     position: fixed;
     bottom: 0; /* or adjust as per your need */
@@ -153,17 +153,33 @@
 }
 
 #solucion-text{
-    padding-top: 10%;
-    font-size: large;
-    font-weight: 600;
+    padding-top: 5%;
+    /* font-size: larger;
+    font-weight: 600; */
+    padding-right: 2%;
 }
 
 #solucion-subtext{
     padding-right: 2%;
+    font-size: larger;
 }
 
 #masBtn{
     width: 140px;
-    padding-left: 34%;
-    padding-top: 5%;
+    padding-top: 15%;
+}
+
+#GMatriz{
+    height: 600px;
+}
+
+#mas_ali{
+    padding-left: 41.3%;
+}
+
+
+.desc {
+
+    /* margin-top: 60%; */
+    padding-top: 2%;
 }

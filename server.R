@@ -54,7 +54,7 @@ function(input, output, session) {
       {str(df)}
     )
     shinyjs::onclick("logo",  updateTabsetPanel(session, inputId="navbar", selected="main"))
-    
+    shinyjs::onclick("masBtn",  updateTabsetPanel(session, inputId="navbar", selected="nuestro"))
     
   # ---- ANALISIS UNIVARIADO --------
     output$AU <- renderUI({
@@ -181,16 +181,22 @@ function(input, output, session) {
       switch(
         input$ABoptions,
         "Matriz de correlación" = {
-          plotOutput("GMatriz", height = "600px")
+          #plotOutput("GMatriz", height = "600px")
+          #imageOutput("GMatriz", height = "600px")
+          img(src = "plots/GMatriz.png", height = "80%", width = "80%", align = "left")
+          
         },
         "Ingresos vs Puntuación de Crédito" = {
-          plotOutput("GRIngresos", height = "600px")
+          #plotOutput("GRIngresos", height = "600px")
+          img(src = "plots/GRIngresos.png", height = "600px", width = "auto", align = "left")
         },
         "Puntuación de Perfil y de Crédito" = {
-          plotOutput("GRPerfil", height = "600px")
+          #plotOutput("GRPerfil", height = "600px")
+          img(src = "plots/perfilgrafica.png", height = "600px", width = "auto", align = "left")
         },
         "Préstamo-valor vs puntuación de perfil" = {
-          plotOutput("GRPrestamo", height = "600px")
+          #plotOutput("GRPrestamo", height = "600px")
+          img(src = "plots/GRPrestamo.png", height = "500px", width = "auto", align = "left")
         }
       )
     })
@@ -231,40 +237,201 @@ function(input, output, session) {
         }
       )
     })
-    
-    output$GMatriz <- renderPlot({
-      ggplot(cor_matrix_melted, aes(Var1, Var2, fill = value)) +
-        geom_tile() +
-        scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
-        theme_minimal() +
-        coord_fixed() +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "", y = "", title = "Matriz de Correlación")
-    })
-    output$GRIngresos <- renderPlot({
-      ggplot(df, aes(x = Income, y = Credit.Score)) + 
-        geom_point(alpha = 0.5, color = "#ffae80") +
-        theme_minimal() +
-        geom_smooth(method = "lm", color = "#000000") +
-        labs(title = "Relación entre Ingresos y Puntuación de Crédito", x = "Ingresos", y = "Puntuación de Crédito")
-    })
-    
-    output$GRPerfil <- renderPlot({
-      ggplot(df, aes(x = Profile.Score, y = Credit.Score)) + 
-        geom_point(alpha = 0.5, color = "#ffae80") +
-        theme_minimal() +
-        geom_smooth(method = "lm", color = "#000000") +
-        labs(title = "Relación entre Puntuación de Perfil y Puntuación de Crédito", x = "Puntuación de Perfil", y = "Puntuación de Crédito")
-    })
-    
-    output$GRPrestamo <- renderPlot({
-      ggplot(df, aes(x = LTV.Ratio, y = Profile.Score)) + 
-        geom_point(alpha = 0.5, color = "#ffae80") +
-        theme_minimal() + 
-        geom_smooth(method = "lm", color = "#000000") +
-        labs(title = "Relación entre el préstamo-valor y la puntuación de perfil", x = "Préstamo valor", y = "Puntuación de perfil")
-    })
+    # ------- DEPRECATED PLOTS -----------------------------------------
+    # output$GMatriz <- renderPlot({
+    #   ggplot(cor_matrix_melted, aes(Var1, Var2, fill = value)) +
+    #     geom_tile() +
+    #     scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+    #     theme_minimal() +
+    #     coord_fixed() +
+    #     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+    #     labs(x = "", y = "", title = "Matriz de Correlación")
+    # })
+    # output$GMatriz <- renderImage({
+    #     filename <- "plots/GMatriz.png"
+    #         list(src = filename, contentType = "image/png")
+    #       }, deleteFile = FALSE)
+    #   })
+    # output$GRIngresos <- renderPlot({
+    #   ggplot(df, aes(x = Income, y = Credit.Score)) + 
+    #     geom_point(alpha = 0.5, color = "#ffae80") +
+    #     theme_minimal() +
+    #     geom_smooth(method = "lm", color = "#000000") +
+    #     labs(title = "Relación entre Ingresos y Puntuación de Crédito", x = "Ingresos", y = "Puntuación de Crédito")
+    # })
+    # 
+    # output$GRPerfil <- renderPlot({
+    #   ggplot(df, aes(x = Profile.Score, y = Credit.Score)) + 
+    #     geom_point(alpha = 0.5, color = "#ffae80") +
+    #     theme_minimal() +
+    #     geom_smooth(method = "lm", color = "#000000") +
+    #     labs(title = "Relación entre Puntuación de Perfil y Puntuación de Crédito", x = "Puntuación de Perfil", y = "Puntuación de Crédito")
+    # })
+    # 
+    # output$GRPrestamo <- renderPlot({
+    #   ggplot(df, aes(x = LTV.Ratio, y = Profile.Score)) + 
+    #     geom_point(alpha = 0.5, color = "#ffae80") +
+    #     theme_minimal() + 
+    #     geom_smooth(method = "lm", color = "#000000") +
+    #     labs(title = "Relación entre el préstamo-valor y la puntuación de perfil", x = "Préstamo valor", y = "Puntuación de perfil")
+    # })
 
   # --------- SOLUCIONES---------
     
+    kmeans_result <- readRDS("www/models/kmeans.rds")
+    df$Cluster <- kmeans_result$cluster
+    
+    cluster_summary <- df %>%
+      group_by(Cluster) %>%
+      summarise(
+        Income_Mean = mean(Income, na.rm = TRUE),
+        Age_Mean = mean(Age, na.rm = TRUE),
+        Credit_Score_Mean = mean(Credit.Score, na.rm = TRUE),
+        Existing_Loans_Count = mean(Number.of.Existing.Loans, na.rm = TRUE),
+        Loan_Amount_Mean = mean(Loan.Amount, na.rm = TRUE),
+        Loan_Tenure_Mean = mean(Loan.Tenure, na.rm = TRUE),
+        LTV_Ratio_Mean = mean(LTV.Ratio, na.rm = TRUE),
+        Count = n()
+      )
+    code <- "    df_filtered <- data.frame(df)
+    df_filtered <- df_filtered %>%
+      mutate(Profile.Score = Profile.Score / 100)
+    df_filtered <- df_filtered %>%
+      mutate(LTV.Ratio = LTV.Ratio / 100)
+    df_filtered <- na.omit(df_filtered)
+    
+    library(randomForest)
+    
+    numericas <- c('Income', 'Credit.Score', 'Credit.History.Length', 'Loan.Amount',
+                   'Loan.Tenure', 'LTV.Ratio', 'Age', 'Number.of.Existing.Loans')
+    categoricas <- c('Employment.Profile', 'Occupation', 'Gender', 
+                     'Existing.Customer')
+    
+    df_filtered[categoricas] <- lapply(df_filtered[categoricas], function(x) as.factor(x))
+    df_filtered[numericas] <- scale(df_filtered[numericas])
+    
+    predictors <- c(numericas, categoricas)
+    target <- 'Profile.Score'
+    set.seed(123)
+    
+    train_indices <- createDataPartition(df_filtered[[target]], p = 0.65, list = FALSE)
+    train_data <- df_filtered[train_indices, ]
+    test_data <- df_filtered[-train_indices, ]
+    
+    modelRF <- randomForest(train_data[, predictors], train_data[[target]], 
+                            ntree = 15, seed = 100)"
+    
+    code.k <- "data_cluster <- select(df, Income, Age, Credit.Score, Number.of.Existing.Loans,
+                       Loan.Amount)
+    data_cluster <- na.omit(data_cluster)
+    data_cluster_scaled <- scale(data_cluster)
+    
+    set.seed(123) 
+    kmeans_result <- kmeans(data_cluster_scaled, centers = 4, nstart = 25)
+    
+    cluster_summary <- df %>%
+      group_by(Cluster) %>%
+      summarise(
+        Income_Mean = mean(Income, na.rm = TRUE),
+        Age_Mean = mean(Age, na.rm = TRUE),
+        Credit_Score_Mean = mean(Credit.Score, na.rm = TRUE),
+        Existing_Loans_Count = mean(Number.of.Existing.Loans, na.rm = TRUE),
+        Loan_Amount_Mean = mean(Loan.Amount, na.rm = TRUE),
+        Loan_Tenure_Mean = mean(Loan.Tenure, na.rm = TRUE),
+        LTV_Ratio_Mean = mean(LTV.Ratio, na.rm = TRUE),
+        Count = n()
+      )"
+    
+    output$SOL <- renderUI({
+      switch (input$SOLoptions,
+        "K-Means" = {
+          tabsetPanel(
+            tabPanel(
+              "Resumen",
+              tagList(
+                div(class = "desc",
+                  strong("Descripción estadística de cada cluster")
+                ) ,
+                div(class = "desc",
+                  verbatimTextOutput("summary"),
+                  tags$pre(code.k)
+                )
+              )
+            ),
+            tabPanel(
+              "Gráfica",
+              img(src = "plots/Kmeans.png", height = "600px", width = "1000px", align = "left")
+            )
+          )
+          
+        },
+        "Random Forest" = {
+          tabsetPanel(
+            tabPanel(
+              "Código",
+              tagList(
+                div(class = "desc",
+                  tags$pre(code)
+                )
+              )
+            ),
+            tabPanel(
+              "Gráfica",
+              img(src = "plots/random2.png", height = "600px", width = "1000px", align = "left")
+            )
+          )
+        }
+      )
+    })
+    
+    output$SOL.Desc <- renderUI({
+      switch (input$SOLoptions,
+              "K-Means" = {
+                tagList(
+                  strong("Ingresos Altos, Puntuación de Crédito Baja:"),
+                  p(""),
+                  p("Este grupo podría representar a individuos que han tenido 
+                    una vida laboral extensa y exitosa, reflejada en sus ingresos
+                    altos y edad mayor, pero que tal vez han tenido dificultades 
+                    financieras recientes o decisiones de préstamos no óptimas que 
+                    afectaron su puntuación de crédito."),
+                  strong("Jóvenes con Menor Capacidad Crediticia:"),
+                  p(""),
+                  p("Este clúster podría consistir en jóvenes profesionales en 
+                    las etapas iniciales de su carrera con ingresos relativamente 
+                    bajos y puntuaciones de crédito en desarrollo. "),
+                  strong("Jóvenes con Buena Salud Crediticia:"),
+                  p(""),
+                  p("Estos individuos podrían ser más jóvenes, posiblemente en 
+                    la mitad de su carrera, con ingresos moderados y excelentes 
+                    puntuaciones de crédito, lo que indica un manejo financiero 
+                    prudente. "),
+                  strong("Acomodados y Financieramente Seguros:"),
+                  p(""),
+                  p("Este grupo parece tener individuos de edad avanzada con 
+                    ingresos muy altos y puntuaciones de crédito superiores, 
+                    lo que sugiere una estabilidad financiera considerable y un 
+                    buen manejo de deudas y créditos. ")
+                )
+              },
+              "Random Forest" = {
+                tagList(
+                  strong("MSE:"),
+                  p("0.002515296"),
+                  strong("R2:"),
+                  p("0.9560031"),
+                  p("Podemos notar una precision excepcionalmente buena, pues se
+                    adapta el 96% de nuestros datos, este modelo puede ser usado para 
+                    la creación de una aplicación al público. En este momento el 
+                    poder computacional necesario para generar el modelo es nuestro
+                    principal impedimento.")
+                  
+                )
+              }
+      )
+    })
+    
+    output$summary <- renderPrint({
+      capture.output(print(cluster_summary))
+    })
 }

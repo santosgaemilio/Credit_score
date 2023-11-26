@@ -40,7 +40,7 @@ fluidPage(
                     <img src="main_bedu.png" id = "main-logo">
                 </div>
                 <p style = "font-weight: 400;
-                font-size:  x-large;">Perfil de Usuarios Óptimos para Créditos</p>
+                font-size: x-large;">Perfil de Usuarios Óptimos para Créditos</p>
                 <div id = solucion></div>
             </div>
         </div>
@@ -54,10 +54,10 @@ fluidPage(
                 </div>
                 <div class="column" style="padding-top: 0%;">
                     <div id = "mercado-title">
-                        <h2 style="text-align: left;">Oportunidad de mercado</h2>
+                        <h2 style="text-align: left;">Oportunidad de mercado</h1>
                         <img src="mercado.png" alt="" id="mercado">                        
                     </div>
-                    <b><p style = "font-size: large;">Según la Encuesta Nacional de Inclusión Financiera (ENIF):</p></b>
+                    <b><p>Según la Encuesta Nacional de Inclusión Financiera (ENIF):</p></b>
                     <li style = "font-size: large;">En 2021, el 32.7% de las personas de 18 a 70 años tienen al menos un crédito formal, lo que representa 27.4 millones de personas.</li>
                 </div>              
             </div>
@@ -93,7 +93,7 @@ fluidPage(
                           br(),
                           dataTableOutput("credit_dt")
                         )
-                      )
+                      ), value = "nuestro"
             ),
              tabPanel("Análisis Univariado", 
                       sidebarLayout(
@@ -132,6 +132,22 @@ fluidPage(
                            uiOutput("AB")
                          )
                        )
+                       ),
+            tabPanel("Soluciones",
+                     sidebarLayout(
+                       sidebarPanel(
+                         div(
+                           class = "graphs",
+                           h3("Modelos ML"),
+                           img(src = "solut.png", height = "30px",  class = "title-graph")),
+                         selectInput("SOLoptions","",c("K-Means",
+                                                       "Random Forest")),
+                         uiOutput("SOL.Desc")
+                       ),
+                       mainPanel(
+                         uiOutput("SOL")
                        )
+                     )
+            )
             )
 )
